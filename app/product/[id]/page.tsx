@@ -32,7 +32,7 @@ const products: Record<string, {
     image: "/images/products/serum.jpg",
     sizes: ["30ml", "50ml"],
     details: "Our Radiance Serum combines 15% stabilized Vitamin C with rosehip seed oil and sea buckthorn extract. The formula is designed to penetrate deep into the skin, targeting dark spots and uneven tone while protecting against environmental stressors. Suitable for all skin types, this serum is your daily dose of luminosity.",
-    howToUse: "Apply 3-4 drops to cleansed face and neck morning and evening. Gently pat into skin until absorbed. Follow with your favorite Boty moisturizer. For best results, use consistently for 4-6 weeks.",
+    howToUse: "Apply 3-4 drops to cleansed face and neck morning and evening. Gently pat into skin until absorbed. Follow with your favorite Izza moisturizer. For best results, use consistently for 4-6 weeks.",
     ingredients: "Aqua, Ascorbic Acid (Vitamin C), Rosa Canina Seed Oil, Hippophae Rhamnoides Oil, Glycerin, Niacinamide, Tocopherol (Vitamin E), Ferulic Acid, Aloe Barbadensis Leaf Juice, Citrus Aurantium Dulcis Peel Oil, Lavandula Angustifolia Oil.",
     delivery: "Free standard shipping on orders over $50. Express shipping available at checkout. All orders ship within 1-2 business days. Returns accepted within 30 days of purchase if product is unused and sealed."
   },
@@ -83,8 +83,8 @@ const products: Record<string, {
 const benefits = [
   { icon: Leaf, label: "100% Natural" },
   { icon: Heart, label: "Cruelty-Free" },
-  { icon: Recycle, label: "Eco-Friendly" },
-  { icon: Award, label: "Expert Approved" }
+  { icon: Recycle, label: "Ecoamigable" },
+  { icon: Award, label: "Aprobado por expertos" }
 ]
 
 type AccordionSection = "details" | "howToUse" | "ingredients" | "delivery"
@@ -113,10 +113,10 @@ export default function ProductPage() {
   }
 
   const accordionItems: { key: AccordionSection; title: string; content: string }[] = [
-    { key: "details", title: "Details", content: product.details },
-    { key: "howToUse", title: "How to Use", content: product.howToUse },
-    { key: "ingredients", title: "Ingredients", content: product.ingredients },
-    { key: "delivery", title: "Delivery & Returns", content: product.delivery }
+    { key: "details", title: "Detalles", content: product.details },
+    { key: "howToUse", title: "Como usar", content: product.howToUse },
+    { key: "ingredients", title: "Ingredientes", content: product.ingredients },
+    { key: "delivery", title: "Envio y devoluciones", content: product.delivery }
   ]
 
   return (
@@ -131,7 +131,7 @@ export default function ProductPage() {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground boty-transition mb-8"
           >
             <ChevronLeft className="w-4 h-4" />
-            Back to Shop
+            Volver a la tienda
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
@@ -151,7 +151,7 @@ export default function ProductPage() {
               {/* Header */}
               <div className="mb-8">
                 <span className="text-sm tracking-[0.3em] uppercase text-primary mb-2 block">
-                  Boty Essentials
+                  Esenciales Izza
                 </span>
                 <h1 className="font-serif text-4xl md:text-5xl text-foreground mb-3">
                   {product.name}
@@ -167,7 +167,7 @@ export default function ProductPage() {
                       <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                     ))}
                   </div>
-                  <span className="text-sm text-muted-foreground">(128 reviews)</span>
+                  <span className="text-sm text-muted-foreground">(128 resenas)</span>
                 </div>
 
                 <p className="text-foreground/80 leading-relaxed">
@@ -187,7 +187,7 @@ export default function ProductPage() {
 
               {/* Size Selector */}
               <div className="mb-6">
-                <label className="text-sm font-medium text-foreground mb-3 block">Size</label>
+                <label className="text-sm font-medium text-foreground mb-3 block">Tamano</label>
                 <div className="flex gap-3">
                   {product.sizes.map((size) => (
                     <button
@@ -208,7 +208,7 @@ export default function ProductPage() {
 
               {/* Quantity Selector */}
               <div className="mb-8">
-                <label className="text-sm font-medium text-foreground mb-3 block">Quantity</label>
+                <label className="text-sm font-medium text-foreground mb-3 block">Cantidad</label>
                 <div className="inline-flex items-center gap-4 bg-card rounded-full px-2 py-2 boty-shadow">
                   <button
                     type="button"
@@ -244,17 +244,17 @@ export default function ProductPage() {
                   {isAdded ? (
                     <>
                       <Check className="w-4 h-4" />
-                      Added to Cart
+                      Agregado al carrito
                     </>
                   ) : (
-                    "Add to Cart"
+                    "Agregar al carrito"
                   )}
                 </button>
                 <button
                   type="button"
                   className="flex-1 inline-flex items-center justify-center gap-2 bg-transparent border border-foreground/20 text-foreground px-8 py-4 rounded-full text-sm tracking-wide boty-transition hover:bg-foreground/5"
                 >
-                  Buy Now
+                  Comprar ahora
                 </button>
               </div>
 

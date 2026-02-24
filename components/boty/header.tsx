@@ -19,7 +19,7 @@ export function Header() {
             type="button"
             className="lg:hidden p-2 text-foreground/80 hover:text-foreground boty-transition"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Abrir menu"
           >
             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -30,25 +30,25 @@ export function Header() {
               href="/shop"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              Shop
+              Tienda
             </Link>
             <Link
               href="/"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              About
+              Nosotros
             </Link>
             <Link
               href="/"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              Ingredients
+              Ingredientes
             </Link>
           </div>
 
           {/* Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-            <h1 className="font-serif text-3xl tracking-wider text-foreground">Boty</h1>
+            <h1 className="font-serif text-3xl tracking-wider text-foreground">Izza</h1>
           </Link>
 
           {/* Right Actions */}
@@ -56,14 +56,14 @@ export function Header() {
             <button
               type="button"
               className="p-2 text-foreground/70 hover:text-foreground boty-transition"
-              aria-label="Search"
+              aria-label="Buscar"
             >
               <Search className="w-5 h-5" />
             </button>
             <Link
               href="/account"
               className="hidden sm:block p-2 text-foreground/70 hover:text-foreground boty-transition"
-              aria-label="Account"
+              aria-label="Cuenta"
             >
               <User className="w-5 h-5" />
             </Link>
@@ -71,7 +71,7 @@ export function Header() {
               type="button"
               onClick={() => setIsOpen(true)}
               className="relative p-2 text-foreground/70 hover:text-foreground boty-transition"
-              aria-label="Cart"
+              aria-label="Carrito"
             >
               <ShoppingBag className="w-5 h-5" />
               {itemCount > 0 && (
@@ -96,25 +96,25 @@ export function Header() {
               href="/shop"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              Shop
+              Tienda
             </Link>
             <Link
               href="/"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              About
+              Nosotros
             </Link>
             <Link
               href="/"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              Ingredients
+              Ingredientes
             </Link>
             <Link
               href="/"
               className="text-sm tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
-              Account
+              Cuenta
             </Link>
           </div>
         </div>
