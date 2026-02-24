@@ -17,7 +17,7 @@ const testimonials = [
     name: "Emma L.",
     location: "Los Angeles",
     rating: 5,
-    text: "Finally, skincare that actually feels natural. No more harsh chemicals. My sensitive skin loves Boty products.",
+    text: "Por fin, skincare que de verdad se siente natural. Sin quimicos agresivos. Mi piel sensible ama los productos de Izza.",
     product: "Gentle Cleanser"
   },
   {
@@ -33,7 +33,7 @@ const testimonials = [
     name: "Maria K.",
     location: "Miami",
     rating: 5,
-    text: "I've tried countless serums but nothing compares to the glow I get from Boty. Absolutely transformative.",
+    text: "He probado muchisimos serums, pero nada se compara con el glow que me da Izza. Es transformador.",
     product: "Glow Serum"
   },
   {
@@ -49,7 +49,7 @@ const testimonials = [
     name: "Anna P.",
     location: "Boston",
     rating: 5,
-    text: "My acne-prone skin has cleared up since switching to Boty. Natural ingredients really make a difference.",
+    text: "Mi piel con acne mejoro desde que cambie a Izza. Los ingredientes naturales si hacen diferencia.",
     product: "Gentle Cleanser"
   },
   {
@@ -65,7 +65,7 @@ const testimonials = [
     name: "Lily W.",
     location: "Portland",
     rating: 5,
-    text: "I love that Boty is cruelty-free and vegan. Great products that align with my values.",
+    text: "Me encanta que Izza sea cruelty-free y vegana. Productos que van con mis valores.",
     product: "Hydra Cream"
   },
   {
@@ -140,10 +140,10 @@ export function Testimonials() {
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
           <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.2s', animationFillMode: 'forwards' } : {}}>
-            Kind Words
+            Lo que dicen
           </span>
           <h2 className={`font-serif text-4xl leading-tight text-foreground text-balance md:text-7xl ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.4s', animationFillMode: 'forwards' } : {}}>
-            Loved by thousands
+            Amada por miles
           </h2>
         </div>
 

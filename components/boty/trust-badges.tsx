@@ -6,23 +6,23 @@ import { Leaf, Droplets, Sparkles, Flower2 } from "lucide-react"
 const badges = [
   {
     icon: Leaf,
-    title: "Organic Certified",
-    description: "100% organic ingredients"
+    title: "Certificacion organica",
+    description: "Ingredientes naturales seleccionados"
   },
   {
     icon: Droplets,
-    title: "Natural Extracts",
-    description: "Pure botanical formulas"
+    title: "Extractos puros",
+    description: "Formulas botanicas limpias"
   },
   {
     icon: Sparkles,
-    title: "Clean Beauty",
-    description: "No toxic chemicals"
+    title: "Belleza limpia",
+    description: "Sin quimicos agresivos"
   },
   {
     icon: Flower2,
-    title: "Vegan Formula",
-    description: "Plant-powered skincare"
+    title: "Formula vegana",
+    description: "Cuidado de la piel vegetal"
   }
 ]
 
@@ -54,7 +54,7 @@ export function TrustBadges() {
   return (
     <section className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div 
+        <div
           ref={sectionRef}
           className="grid grid-cols-2 lg:grid-cols-4 gap-6"
         >
@@ -62,9 +62,9 @@ export function TrustBadges() {
             <div
               key={badge.title}
               className={`bg-background p-6 lg:p-8 text-center rounded-xl border border-stone-200 transition-all duration-700 ease-out border-none ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >

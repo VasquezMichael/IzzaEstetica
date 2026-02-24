@@ -23,8 +23,8 @@ export function CartDrawer() {
     <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
       <DrawerContent className="h-full w-full sm:max-w-[440px]">
         <DrawerHeader className="border-b border-border/50 p-6 py-2.5">
-          <DrawerTitle className="font-serif text-2xl">Cart</DrawerTitle>
-          <DrawerDescription>{itemCount} {itemCount === 1 ? 'item' : 'items'}</DrawerDescription>
+          <DrawerTitle className="font-serif text-2xl">Carrito</DrawerTitle>
+          <DrawerDescription>{itemCount} {itemCount === 1 ? 'producto' : 'productos'}</DrawerDescription>
         </DrawerHeader>
 
         {/* Cart Items */}
@@ -32,13 +32,13 @@ export function CartDrawer() {
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <ShoppingBag className="w-12 h-12 text-muted-foreground/50 mb-4" />
-              <p className="text-muted-foreground">Your cart is empty</p>
+              <p className="text-muted-foreground">Tu carrito esta vacio</p>
               <DrawerClose asChild>
                 <button
                   type="button"
                   className="mt-4 text-primary hover:underline text-sm"
                 >
-                  Continue Shopping
+                  Seguir comprando
                 </button>
               </DrawerClose>
             </div>
@@ -113,8 +113,8 @@ export function CartDrawer() {
                 <span>${subtotal}</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : `$${shipping}`}</span>
+                <span>Envio</span>
+                <span>{shipping === 0 ? 'Gratis' : `$${shipping}`}</span>
               </div>
               <div className="flex justify-between text-base font-medium text-foreground pt-2 border-t border-border/50">
                 <span>Total</span>
@@ -127,7 +127,7 @@ export function CartDrawer() {
               type="button"
               className="w-full bg-primary text-primary-foreground py-4 rounded-full font-medium hover:bg-primary/90 boty-transition"
             >
-              Checkout
+              Finalizar compra
             </button>
 
             <DrawerClose asChild>
@@ -135,7 +135,7 @@ export function CartDrawer() {
                 type="button"
                 className="w-full border border-border text-foreground py-4 rounded-full font-medium hover:bg-muted boty-transition"
               >
-                Continue Shopping
+                Seguir comprando
               </button>
             </DrawerClose>
           </DrawerFooter>

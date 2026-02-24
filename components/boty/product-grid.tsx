@@ -13,17 +13,17 @@ const products = [
   {
     id: "radiance-serum",
     name: "Radiance Serum",
-    description: "Vitamin C brightening formula",
+    description: "Formula iluminadora con vitamina C",
     price: 68,
     originalPrice: null,
     image: "/images/products/serum-bottles-1.png",
-    badge: "Bestseller",
+    badge: "Mas vendido",
     category: "serum" as Category
   },
   {
     id: "hydrating-serum",
     name: "Hydrating Serum",
-    description: "Hyaluronic acid moisture boost",
+    description: "Impulso de hidratacion con acido hialuronico",
     price: 62,
     originalPrice: null,
     image: "/images/products/eye-serum-bottles.png",
@@ -33,28 +33,28 @@ const products = [
   {
     id: "age-defense-serum",
     name: "Age Defense Serum",
-    description: "Retinol & peptide complex",
+    description: "Complejo de retinol y peptidos",
     price: 78,
     originalPrice: null,
     image: "/images/products/amber-dropper-bottles.png",
-    badge: "New",
+    badge: "Nuevo",
     category: "serum" as Category
   },
   {
     id: "glow-serum",
     name: "Glow Serum",
-    description: "Niacinamide brightening boost",
+    description: "Impulso iluminador con niacinamida",
     price: 58,
     originalPrice: 68,
     image: "/images/products/spray-bottles.png",
-    badge: "Sale",
+    badge: "Oferta",
     category: "serum" as Category
   },
   // Creams
   {
     id: "hydra-cream",
     name: "Hydra Cream",
-    description: "Deep moisture with hyaluronic acid",
+    description: "Hidratacion profunda con acido hialuronico",
     price: 54,
     originalPrice: null,
     image: "/images/products/cream-jars-colored.png",
@@ -64,27 +64,27 @@ const products = [
   {
     id: "gentle-cleanser",
     name: "Gentle Cleanser",
-    description: "Soothing botanical wash",
+    description: "Limpieza botanica calmante",
     price: 38,
     originalPrice: 48,
     image: "/images/products/tube-bottles.png",
-    badge: "Sale",
+    badge: "Oferta",
     category: "cream" as Category
   },
   {
     id: "night-cream",
     name: "Night Cream",
-    description: "Restorative overnight treatment",
+    description: "Tratamiento reparador nocturno",
     price: 64,
     originalPrice: null,
     image: "/images/products/jars-wooden-lid.png",
-    badge: "Bestseller",
+    badge: "Mas vendido",
     category: "cream" as Category
   },
   {
     id: "day-cream-spf",
     name: "Day Cream SPF 30",
-    description: "Protection & hydration",
+    description: "Proteccion e hidratacion",
     price: 58,
     originalPrice: null,
     image: "/images/products/pump-bottles-lavender.png",
@@ -95,17 +95,17 @@ const products = [
   {
     id: "renewal-oil",
     name: "Renewal Oil",
-    description: "Nourishing facial oil blend",
+    description: "Mezcla nutritiva de aceites faciales",
     price: 72,
     originalPrice: null,
     image: "/images/products/amber-dropper-bottles.png",
-    badge: "New",
+    badge: "Nuevo",
     category: "oil" as Category
   },
   {
     id: "rosehip-oil",
     name: "Rosehip Oil",
-    description: "Pure organic rosehip extract",
+    description: "Extracto puro organico de rosa mosqueta",
     price: 48,
     originalPrice: null,
     image: "/images/products/serum-bottles-1.png",
@@ -115,7 +115,7 @@ const products = [
   {
     id: "jojoba-oil",
     name: "Jojoba Oil",
-    description: "Balancing & lightweight",
+    description: "Ligero y equilibrante",
     price: 42,
     originalPrice: null,
     image: "/images/products/spray-bottles.png",
@@ -125,18 +125,18 @@ const products = [
   {
     id: "argan-oil",
     name: "Argan Oil",
-    description: "Moroccan beauty elixir",
+    description: "Elixir de belleza marroqui",
     price: 56,
     originalPrice: null,
     image: "/images/products/pump-bottles-cream.png",
-    badge: "Bestseller",
+    badge: "Mas vendido",
     category: "oil" as Category
   }
 ]
 
 const categories = [
-  { value: "cream" as Category, label: "Cream" },
-  { value: "oil" as Category, label: "Oil" },
+  { value: "cream" as Category, label: "Crema" },
+  { value: "oil" as Category, label: "Aceite" },
   { value: "serum" as Category, label: "Serum" }
 ]
 
@@ -213,14 +213,14 @@ export function ProductGrid() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
-          <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.2s', animationFillMode: 'forwards' } : {}}>
-            Our Collection
+            <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.2s', animationFillMode: 'forwards' } : {}}>
+            Nuestra coleccion
           </span>
           <h2 className={`font-serif leading-tight text-foreground mb-4 text-balance text-7xl ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.4s', animationFillMode: 'forwards' } : {}}>
-            Gentle essentials
+            Esenciales suaves
           </h2>
           <p className={`text-lg text-muted-foreground max-w-md mx-auto ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.6s', animationFillMode: 'forwards' } : {}}>
-            Thoughtfully crafted products for your daily skincare ritual
+            Productos creados con cuidado para tu ritual diario
           </p>
         </div>
 
@@ -279,9 +279,9 @@ export function ProductGrid() {
                   {product.badge && (
                     <span
                       className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs tracking-wide bg-white text-black ${
-                        product.badge === "Sale"
+                        product.badge === "Oferta"
                           ? "bg-destructive/10 text-destructive"
-                          : product.badge === "New"
+                          : product.badge === "Nuevo"
                           ? "bg-primary/10 text-primary"
                           : "bg-accent text-accent-foreground"
                       }`}
@@ -304,7 +304,7 @@ export function ProductGrid() {
                         image: product.image
                       })
                     }}
-                    aria-label="Add to cart"
+                    aria-label="Agregar al carrito"
                   >
                     <ShoppingBag className="w-4 h-4 text-foreground" />
                   </button>
@@ -334,7 +334,7 @@ export function ProductGrid() {
             href="/shop"
             className="inline-flex items-center justify-center gap-2 bg-transparent border border-foreground/20 text-foreground px-8 py-4 rounded-full text-sm tracking-wide boty-transition hover:bg-foreground/5"
           >
-            View All Products
+            Ver todos los productos
           </Link>
         </div>
       </div>
