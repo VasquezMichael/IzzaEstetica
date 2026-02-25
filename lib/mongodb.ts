@@ -1,11 +1,5 @@
 import mongoose from "mongoose"
 
-const MONGODB_URI = process.env.MONGODB_URI
-
-if (!MONGODB_URI) {
-  throw new Error("Missing MONGODB_URI in environment variables.")
-}
-
 type MongooseCache = {
   conn: typeof mongoose | null
   promise: Promise<typeof mongoose> | null
@@ -29,8 +23,13 @@ export async function connectToDatabase() {
     return cache.conn
   }
 
+  const mongodbUri = process.env.MONGODB_URI
+  if (!mongodbUri) {
+    throw new Error("Missing MONGODB_URI in environment variables.")
+  }
+
   if (!cache.promise) {
-    cache.promise = mongoose.connect(MONGODB_URI!, {
+    cache.promise = mongoose.connect(mongodbUri, {
       dbName: process.env.MONGODB_DB_NAME || "izza_estetica"
     })
   }
