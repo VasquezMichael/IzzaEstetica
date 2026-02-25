@@ -1,9 +1,17 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { FormEvent, Suspense, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 
 export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={<LoginPageSkeleton />}>
+      <AdminLoginContent />
+    </Suspense>
+  )
+}
+
+function AdminLoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const nextPath = searchParams.get("next") || "/admin/products"
@@ -82,6 +90,17 @@ export default function AdminLoginPage() {
             {loading ? "Ingresando..." : "Ingresar"}
           </button>
         </form>
+      </div>
+    </main>
+  )
+}
+
+function LoginPageSkeleton() {
+  return (
+    <main className="min-h-screen bg-background px-4 py-12">
+      <div className="mx-auto w-full max-w-md rounded-2xl border bg-card p-6 shadow-sm">
+        <h1 className="font-serif text-3xl text-foreground">Admin Izza</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Cargando...</p>
       </div>
     </main>
   )

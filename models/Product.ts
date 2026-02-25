@@ -82,7 +82,6 @@ const productSchema = new Schema(
   }
 )
 
-productSchema.index({ slug: 1 }, { unique: true })
 productSchema.index({ category: 1 })
 productSchema.index({ active: 1 })
 
