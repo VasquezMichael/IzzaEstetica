@@ -50,13 +50,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const shouldRenderVercelAnalytics = Boolean(process.env.VERCEL)
+
   return (
     <html lang="es">
       <body className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}>
         <CartProvider>
           {children}
         </CartProvider>
-        <Analytics />
+        {shouldRenderVercelAnalytics ? <Analytics /> : null}
       </body>
     </html>
   )
