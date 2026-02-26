@@ -1,6 +1,9 @@
 import Link from "next/link"
 import { LogoutButton } from "@/components/admin/logout-button"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default function AdminLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
