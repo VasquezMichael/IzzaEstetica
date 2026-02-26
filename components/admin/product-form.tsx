@@ -49,6 +49,7 @@ export function ProductForm({ initialValues, submitLabel, onSubmit }: ProductFor
   const [values, setValues] = useState<ProductFormValues>(initialValues ?? defaultValues)
   const [sizesInput, setSizesInput] = useState((initialValues?.sizes || []).join(", "))
   const [submitting, setSubmitting] = useState(false)
+  const [uploadingImage, setUploadingImage] = useState(false)
   const [error, setError] = useState("")
 
   const canSubmit = useMemo(() => {
@@ -78,6 +79,37 @@ export function ProductForm({ initialValues, submitLabel, onSubmit }: ProductFor
       setError(message)
     } finally {
       setSubmitting(false)
+    }
+  }
+
+  async function handleImageFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setUploadingImage(true)
+    setError("")
+
+    try {
+      const formData = new FormData()
+      formData.append("file", file)
+
+      const response = await fetch("/api/admin/uploads/product-image", {
+        method: "POST",
+        body: formData
+      })
+      const data = await response.json().catch(() => null)
+
+      if (!response.ok) {
+        throw new Error(data?.error || "No se pudo subir la imagen.")
+      }
+
+      setValues((prev) => ({ ...prev, image: data.url }))
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "No se pudo subir la imagen."
+      setError(message)
+    } finally {
+      setUploadingImage(false)
+      event.target.value = ""
     }
   }
 
@@ -167,12 +199,26 @@ export function ProductForm({ initialValues, submitLabel, onSubmit }: ProductFor
         </Field>
       </div>
 
-      <Field label="Imagen (URL o ruta local) *">
-        <input
-          value={values.image}
-          onChange={(e) => setValues((prev) => ({ ...prev, image: e.target.value }))}
-          className={INPUT_CLASS}
-        />
+      <Field label="Imagen *">
+        <div className="space-y-2">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageFileChange}
+            disabled={uploadingImage}
+            className={INPUT_CLASS}
+          />
+          <input
+            value={values.image}
+            onChange={(e) => setValues((prev) => ({ ...prev, image: e.target.value }))}
+            placeholder="URL o ruta guardada (ej: /uploads/products/archivo.jpg)"
+            className={INPUT_CLASS}
+          />
+          {uploadingImage ? <p className="text-xs text-muted-foreground">Subiendo imagen...</p> : null}
+          {values.image ? (
+            <p className="text-xs text-muted-foreground">Imagen actual: {values.image}</p>
+          ) : null}
+        </div>
       </Field>
 
       <Field label="Detalles">
