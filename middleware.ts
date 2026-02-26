@@ -5,6 +5,12 @@ function isPublicAdminPath(pathname: string) {
   return pathname === "/admin/login" || pathname === "/api/admin/auth/login"
 }
 
+function isPrefetchRequest(request: NextRequest) {
+  const purpose = request.headers.get("purpose")
+  const nextRouterPrefetch = request.headers.get("next-router-prefetch")
+  return purpose === "prefetch" || nextRouterPrefetch === "1"
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -13,6 +19,11 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isPublicAdminPath(pathname)) {
+    return NextResponse.next()
+  }
+
+  // Avoid auth redirects on speculative prefetch requests.
+  if (isPrefetchRequest(request)) {
     return NextResponse.next()
   }
 

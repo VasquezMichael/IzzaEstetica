@@ -16,7 +16,11 @@ export default function AdminLayout({
               <Link href="/admin/products" className="text-foreground/80 hover:text-foreground">
                 Productos
               </Link>
-              <Link href="/admin/products/new" className="text-foreground/80 hover:text-foreground">
+              <Link
+                href="/admin/products/new"
+                prefetch={false}
+                className="text-foreground/80 hover:text-foreground"
+              >
                 Nuevo
               </Link>
             </nav>
