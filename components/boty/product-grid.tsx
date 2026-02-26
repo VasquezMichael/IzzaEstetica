@@ -1,157 +1,31 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ShoppingBag } from "lucide-react"
 import { useCart } from "./cart-context"
-
-type Category = "cream" | "oil" | "serum"
-
-const products = [
-  // Serums
-  {
-    id: "radiance-serum",
-    name: "Radiance Serum",
-    description: "Formula iluminadora con vitamina C",
-    price: 68,
-    originalPrice: null,
-    image: "/images/products/serum-bottles-1.png",
-    badge: "Mas vendido",
-    category: "serum" as Category
-  },
-  {
-    id: "hydrating-serum",
-    name: "Hydrating Serum",
-    description: "Impulso de hidratacion con acido hialuronico",
-    price: 62,
-    originalPrice: null,
-    image: "/images/products/eye-serum-bottles.png",
-    badge: null,
-    category: "serum" as Category
-  },
-  {
-    id: "age-defense-serum",
-    name: "Age Defense Serum",
-    description: "Complejo de retinol y peptidos",
-    price: 78,
-    originalPrice: null,
-    image: "/images/products/amber-dropper-bottles.png",
-    badge: "Nuevo",
-    category: "serum" as Category
-  },
-  {
-    id: "glow-serum",
-    name: "Glow Serum",
-    description: "Impulso iluminador con niacinamida",
-    price: 58,
-    originalPrice: 68,
-    image: "/images/products/spray-bottles.png",
-    badge: "Oferta",
-    category: "serum" as Category
-  },
-  // Creams
-  {
-    id: "hydra-cream",
-    name: "Hydra Cream",
-    description: "Hidratacion profunda con acido hialuronico",
-    price: 54,
-    originalPrice: null,
-    image: "/images/products/cream-jars-colored.png",
-    badge: null,
-    category: "cream" as Category
-  },
-  {
-    id: "gentle-cleanser",
-    name: "Gentle Cleanser",
-    description: "Limpieza botanica calmante",
-    price: 38,
-    originalPrice: 48,
-    image: "/images/products/tube-bottles.png",
-    badge: "Oferta",
-    category: "cream" as Category
-  },
-  {
-    id: "night-cream",
-    name: "Night Cream",
-    description: "Tratamiento reparador nocturno",
-    price: 64,
-    originalPrice: null,
-    image: "/images/products/jars-wooden-lid.png",
-    badge: "Mas vendido",
-    category: "cream" as Category
-  },
-  {
-    id: "day-cream-spf",
-    name: "Day Cream SPF 30",
-    description: "Proteccion e hidratacion",
-    price: 58,
-    originalPrice: null,
-    image: "/images/products/pump-bottles-lavender.png",
-    badge: null,
-    category: "cream" as Category
-  },
-  // Oils
-  {
-    id: "renewal-oil",
-    name: "Renewal Oil",
-    description: "Mezcla nutritiva de aceites faciales",
-    price: 72,
-    originalPrice: null,
-    image: "/images/products/amber-dropper-bottles.png",
-    badge: "Nuevo",
-    category: "oil" as Category
-  },
-  {
-    id: "rosehip-oil",
-    name: "Rosehip Oil",
-    description: "Extracto puro organico de rosa mosqueta",
-    price: 48,
-    originalPrice: null,
-    image: "/images/products/serum-bottles-1.png",
-    badge: null,
-    category: "oil" as Category
-  },
-  {
-    id: "jojoba-oil",
-    name: "Jojoba Oil",
-    description: "Ligero y equilibrante",
-    price: 42,
-    originalPrice: null,
-    image: "/images/products/spray-bottles.png",
-    badge: null,
-    category: "oil" as Category
-  },
-  {
-    id: "argan-oil",
-    name: "Argan Oil",
-    description: "Elixir de belleza marroqui",
-    price: 56,
-    originalPrice: null,
-    image: "/images/products/pump-bottles-cream.png",
-    badge: "Mas vendido",
-    category: "oil" as Category
-  }
-]
+import { type HomeCategory, type PublicProduct, toHomeCategory } from "@/lib/public-products"
 
 const categories = [
-  { value: "cream" as Category, label: "Crema" },
-  { value: "oil" as Category, label: "Aceite" },
-  { value: "serum" as Category, label: "Serum" }
+  { value: "cream" as HomeCategory, label: "Crema" },
+  { value: "oil" as HomeCategory, label: "Aceite" },
+  { value: "serum" as HomeCategory, label: "Serum" }
 ]
 
 export function ProductGrid() {
-  const [selectedCategory, setSelectedCategory] = useState<Category>("cream")
+  const [selectedCategory, setSelectedCategory] = useState<HomeCategory>("cream")
+  const [products, setProducts] = useState<PublicProduct[]>([])
   const [isVisible, setIsVisible] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [headerVisible, setHeaderVisible] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const { addItem } = useCart()
-  
-  const filteredProducts = products.filter(product => product.category === selectedCategory)
 
-  const handleCategoryChange = (category: Category) => {
+  const filteredProducts = products.filter((product) => toHomeCategory(product.category) === selectedCategory)
+
+  const handleCategoryChange = (category: HomeCategory) => {
     if (category !== selectedCategory) {
       setIsTransitioning(true)
       setTimeout(() => {
@@ -163,13 +37,42 @@ export function ProductGrid() {
     }
   }
 
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadProducts() {
+      try {
+        const response = await fetch("/api/products", { cache: "no-store" })
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || "No se pudo cargar productos.")
+        }
+
+        if (cancelled) return
+        setProducts(Array.isArray(data.items) ? data.items : [])
+      } catch (error) {
+        console.error("ProductGrid load error:", error)
+        if (!cancelled) {
+          setProducts([])
+        }
+      }
+    }
+
+    loadProducts()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   // Preload all product images on mount
   useEffect(() => {
     products.forEach((product) => {
       const img = new window.Image()
       img.src = product.image
     })
-  }, [])
+  }, [products])
 
   useEffect(() => {
     const gridObserver = new IntersectionObserver(
@@ -213,13 +116,13 @@ export function ProductGrid() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
-            <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.2s', animationFillMode: 'forwards' } : {}}>
+          <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? "animate-blur-in opacity-0" : "opacity-0"}`} style={headerVisible ? { animationDelay: "0.2s", animationFillMode: "forwards" } : {}}>
             Nuestra coleccion
           </span>
-          <h2 className={`font-serif leading-tight text-foreground mb-4 text-balance text-7xl ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.4s', animationFillMode: 'forwards' } : {}}>
+          <h2 className={`font-serif leading-tight text-foreground mb-4 text-balance text-7xl ${headerVisible ? "animate-blur-in opacity-0" : "opacity-0"}`} style={headerVisible ? { animationDelay: "0.4s", animationFillMode: "forwards" } : {}}>
             Esenciales suaves
           </h2>
-          <p className={`text-lg text-muted-foreground max-w-md mx-auto ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.6s', animationFillMode: 'forwards' } : {}}>
+          <p className={`text-lg text-muted-foreground max-w-md mx-auto ${headerVisible ? "animate-blur-in opacity-0" : "opacity-0"}`} style={headerVisible ? { animationDelay: "0.6s", animationFillMode: "forwards" } : {}}>
             Productos creados con cuidado para tu ritual diario
           </p>
         </div>
@@ -231,8 +134,8 @@ export function ProductGrid() {
             <div
               className="absolute top-1 bottom-1 bg-foreground rounded-full transition-all duration-300 ease-out shadow-sm"
               style={{
-                left: selectedCategory === 'cream' ? '4px' : selectedCategory === 'oil' ? 'calc(33.333% + 2px)' : 'calc(66.666%)',
-                width: 'calc(33.333% - 4px)'
+                left: selectedCategory === "cream" ? "4px" : selectedCategory === "oil" ? "calc(33.333% + 2px)" : "calc(66.666%)",
+                width: "calc(33.333% - 4px)"
               }}
             />
             {categories.map((category) => (
@@ -241,9 +144,7 @@ export function ProductGrid() {
                 type="button"
                 onClick={() => handleCategoryChange(category.value)}
                 className={`relative z-10 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedCategory === category.value
-                    ? "text-background"
-                    : "text-muted-foreground hover:text-foreground"
+                  selectedCategory === category.value ? "text-background" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {category.label}
@@ -253,18 +154,13 @@ export function ProductGrid() {
         </div>
 
         {/* Product Grid */}
-        <div 
-          ref={gridRef}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product, index) => (
             <Link
-              key={`${selectedCategory}-${product.id}`}
-              href={`/product/${product.id}`}
-              className={`group transition-all duration-500 ease-out ${
-                isVisible && !isTransitioning ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-              }`}
-              style={{ transitionDelay: isTransitioning ? '0ms' : `${index * 80}ms` }}
+              key={`${selectedCategory}-${product.slug}`}
+              href={`/product/${product.slug}`}
+              className={`group transition-all duration-500 ease-out ${isVisible && !isTransitioning ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+              style={{ transitionDelay: isTransitioning ? "0ms" : `${index * 80}ms` }}
             >
               <div className="bg-background rounded-3xl overflow-hidden boty-shadow boty-transition group-hover:scale-[1.02]">
                 {/* Image */}
@@ -279,11 +175,7 @@ export function ProductGrid() {
                   {product.badge && (
                     <span
                       className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs tracking-wide bg-white text-black ${
-                        product.badge === "Oferta"
-                          ? "bg-destructive/10 text-destructive"
-                          : product.badge === "Nuevo"
-                          ? "bg-primary/10 text-primary"
-                          : "bg-accent text-accent-foreground"
+                        product.badge === "Oferta" ? "bg-destructive/10 text-destructive" : product.badge === "Nuevo" ? "bg-primary/10 text-primary" : "bg-accent text-accent-foreground"
                       }`}
                     >
                       {product.badge}
@@ -297,7 +189,7 @@ export function ProductGrid() {
                       e.preventDefault()
                       e.stopPropagation()
                       addItem({
-                        id: product.id,
+                        id: product.slug,
                         name: product.name,
                         description: product.description,
                         price: product.price,
@@ -316,11 +208,7 @@ export function ProductGrid() {
                   <p className="text-sm text-muted-foreground mb-3">{product.description}</p>
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-foreground">${product.price}</span>
-                    {product.originalPrice && (
-                      <span className="text-sm text-muted-foreground line-through">
-                        ${product.originalPrice}
-                      </span>
-                    )}
+                    {product.originalPrice ? <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span> : null}
                   </div>
                 </div>
               </div>

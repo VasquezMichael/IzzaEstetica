@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
@@ -6,172 +6,49 @@ import Link from "next/link"
 import { ShoppingBag, SlidersHorizontal, X } from "lucide-react"
 import { Header } from "@/components/boty/header"
 import { Footer } from "@/components/boty/footer"
+import { type PublicProduct, type ShopCategory, toShopCategory } from "@/lib/public-products"
 
-const products = [
-  // Serums
-  {
-    id: "radiance-serum",
-    name: "Radiance Serum",
-    description: "Formula iluminadora con vitamina C",
-    price: 68,
-    originalPrice: null,
-    image: "/images/products/serum-bottles-1.png",
-    badge: "Mas vendido",
-    category: "serums"
-  },
-  {
-    id: "hydrating-serum",
-    name: "Hydrating Serum",
-    description: "Impulso de hidratacion con acido hialuronico",
-    price: 62,
-    originalPrice: null,
-    image: "/images/products/eye-serum-bottles.png",
-    badge: null,
-    category: "serums"
-  },
-  {
-    id: "age-defense-serum",
-    name: "Age Defense Serum",
-    description: "Complejo de retinol y peptidos",
-    price: 78,
-    originalPrice: null,
-    image: "/images/products/amber-dropper-bottles.png",
-    badge: "Nuevo",
-    category: "serums"
-  },
-  {
-    id: "glow-serum",
-    name: "Glow Serum",
-    description: "Impulso iluminador con niacinamida",
-    price: 58,
-    originalPrice: 68,
-    image: "/images/products/spray-bottles.png",
-    badge: "Oferta",
-    category: "serums"
-  },
-  // Creams
-  {
-    id: "hydra-cream",
-    name: "Hydra Cream",
-    description: "Hidratacion profunda con acido hialuronico",
-    price: 54,
-    originalPrice: null,
-    image: "/images/products/cream-jars-colored.png",
-    badge: null,
-    category: "moisturizers"
-  },
-  {
-    id: "gentle-cleanser",
-    name: "Gentle Cleanser",
-    description: "Limpieza botanica calmante",
-    price: 38,
-    originalPrice: 48,
-    image: "/images/products/tube-bottles.png",
-    badge: "Oferta",
-    category: "cleansers"
-  },
-  {
-    id: "night-cream",
-    name: "Night Cream",
-    description: "Tratamiento reparador nocturno",
-    price: 64,
-    originalPrice: null,
-    image: "/images/products/jars-wooden-lid.png",
-    badge: "Mas vendido",
-    category: "moisturizers"
-  },
-  {
-    id: "day-cream-spf",
-    name: "Day Cream SPF 30",
-    description: "Proteccion e hidratacion",
-    price: 58,
-    originalPrice: null,
-    image: "/images/products/pump-bottles-lavender.png",
-    badge: null,
-    category: "moisturizers"
-  },
-  // Oils
-  {
-    id: "renewal-oil",
-    name: "Renewal Oil",
-    description: "Mezcla nutritiva de aceites faciales",
-    price: 72,
-    originalPrice: null,
-    image: "/images/products/amber-dropper-bottles.png",
-    badge: "Nuevo",
-    category: "oils"
-  },
-  {
-    id: "rosehip-oil",
-    name: "Rosehip Oil",
-    description: "Extracto puro organico de rosa mosqueta",
-    price: 48,
-    originalPrice: null,
-    image: "/images/products/serum-bottles-1.png",
-    badge: null,
-    category: "oils"
-  },
-  {
-    id: "jojoba-oil",
-    name: "Jojoba Oil",
-    description: "Ligero y equilibrante",
-    price: 42,
-    originalPrice: null,
-    image: "/images/products/spray-bottles.png",
-    badge: null,
-    category: "oils"
-  },
-  {
-    id: "argan-oil",
-    name: "Argan Oil",
-    description: "Elixir de belleza marroqui",
-    price: 56,
-    originalPrice: null,
-    image: "/images/products/pump-bottles-cream.png",
-    badge: "Mas vendido",
-    category: "oils"
-  },
-  // Masks & Toners (original products)
-  {
-    id: "glow-mask",
-    name: "Glow Mask",
-    description: "Tratamiento iluminador semanal",
-    price: 45,
-    originalPrice: null,
-    image: "/images/products/mask.jpg",
-    badge: null,
-    category: "masks"
-  },
-  {
-    id: "balance-toner",
-    name: "Balance Toner",
-    description: "Bruma restauradora del pH",
-    price: 32,
-    originalPrice: null,
-    image: "/images/products/toner.jpg",
-    badge: "Nuevo",
-    category: "toners"
-  }
-]
-
-const categories = ["todos", "serums", "hidratantes", "limpiadores", "aceites", "mascaras", "tonicos"]
+const categories: Array<"todos" | ShopCategory> = ["todos", "serums", "hidratantes", "limpiadores", "aceites", "mascaras", "tonicos", "otros"]
 
 export default function ShopPage() {
-  const [selectedCategory, setSelectedCategory] = useState("todos")
+  const [products, setProducts] = useState<PublicProduct[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<(typeof categories)[number]>("todos")
   const [showFilters, setShowFilters] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
 
-  const filteredProducts = selectedCategory === "todos"
-    ? products
-    : products.filter((p) => {
-      if (selectedCategory === "hidratantes") return p.category === "moisturizers"
-      if (selectedCategory === "limpiadores") return p.category === "cleansers"
-      if (selectedCategory === "aceites") return p.category === "oils"
-      if (selectedCategory === "mascaras") return p.category === "masks"
-      if (selectedCategory === "tonicos") return p.category === "toners"
-      return p.category === selectedCategory
-    })
+  const filteredProducts =
+    selectedCategory === "todos" ? products : products.filter((p) => toShopCategory(p.category) === selectedCategory)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadProducts() {
+      try {
+        const response = await fetch("/api/products", { cache: "no-store" })
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || "No se pudo cargar productos.")
+        }
+
+        if (!cancelled) {
+          setProducts(Array.isArray(data.items) ? data.items : [])
+        }
+      } catch (error) {
+        console.error("ShopPage load error:", error)
+        if (!cancelled) {
+          setProducts([])
+        }
+      }
+    }
+
+    loadProducts()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -204,20 +81,14 @@ export default function ShopPage() {
   return (
     <main className="min-h-screen">
       <Header />
-      
+
       <div className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <span className="text-sm tracking-[0.3em] uppercase text-primary mb-4 block">
-              Nuestra coleccion
-            </span>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 text-balance">
-              Tienda completa
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-md mx-auto">
-              Descubre toda nuestra linea de esenciales de skincare natural
-            </p>
+            <span className="text-sm tracking-[0.3em] uppercase text-primary mb-4 block">Nuestra coleccion</span>
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 text-balance">Tienda completa</h1>
+            <p className="text-lg text-muted-foreground max-w-md mx-auto">Descubre toda nuestra linea de esenciales de skincare natural</p>
           </div>
 
           {/* Filter Bar */}
@@ -239,9 +110,7 @@ export default function ShopPage() {
                   type="button"
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm capitalize boty-transition bg-popover ${
-                    selectedCategory === category
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-card text-foreground/70 hover:text-foreground boty-shadow"
+                    selectedCategory === category ? "bg-primary text-primary-foreground" : "bg-card text-foreground/70 hover:text-foreground boty-shadow"
                   }`}
                 >
                   {category}
@@ -255,7 +124,7 @@ export default function ShopPage() {
           </div>
 
           {/* Mobile Filters */}
-          {showFilters && (
+          {showFilters ? (
             <div className="lg:hidden fixed inset-0 z-50 bg-background">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
@@ -278,9 +147,7 @@ export default function ShopPage() {
                         setShowFilters(false)
                       }}
                       className={`w-full px-6 py-4 rounded-2xl text-left capitalize boty-transition ${
-                        selectedCategory === category
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-card text-foreground boty-shadow"
+                        selectedCategory === category ? "bg-primary text-primary-foreground" : "bg-card text-foreground boty-shadow"
                       }`}
                     >
                       {category}
@@ -289,20 +156,12 @@ export default function ShopPage() {
                 </div>
               </div>
             </div>
-          )}
+          ) : null}
 
           {/* Product Grid */}
-          <div 
-            ref={gridRef}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+          <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product, index) => (
-              <ProductCard 
-                key={product.id}
-                product={product}
-                index={index}
-                isVisible={isVisible}
-              />
+              <ProductCard key={product.slug} product={product} index={index} isVisible={isVisible} />
             ))}
           </div>
         </div>
@@ -313,12 +172,12 @@ export default function ShopPage() {
   )
 }
 
-function ProductCard({ 
-  product, 
-  index, 
-  isVisible 
-}: { 
-  product: typeof products[0]
+function ProductCard({
+  product,
+  index,
+  isVisible
+}: {
+  product: PublicProduct
   index: number
   isVisible: boolean
 }) {
@@ -326,45 +185,39 @@ function ProductCard({
 
   return (
     <Link
-      href={`/product/${product.id}`}
-      className={`group transition-all duration-700 ease-out ${
-        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-      }`}
+      href={`/product/${product.slug}`}
+      className={`group transition-all duration-700 ease-out ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
       style={{ transitionDelay: `${index * 80}ms` }}
     >
       <div className="bg-card rounded-3xl overflow-hidden boty-shadow boty-transition group-hover:scale-[1.02]">
         {/* Image */}
         <div className="relative aspect-square bg-muted overflow-hidden">
           {/* Skeleton */}
-          <div 
+          <div
             className={`absolute inset-0 bg-gradient-to-br from-muted via-muted/50 to-muted animate-pulse transition-opacity duration-500 ${
-              imageLoaded ? 'opacity-0' : 'opacity-100'
+              imageLoaded ? "opacity-0" : "opacity-100"
             }`}
           />
-          
+
           <Image
             src={product.image || "/placeholder.svg"}
             alt={product.name}
             fill
             className={`object-cover boty-transition group-hover:scale-105 transition-opacity duration-500 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
+              imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}
           />
           {/* Badge */}
-          {product.badge && (
+          {product.badge ? (
             <span
               className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs tracking-wide ${
-                product.badge === "Oferta"
-                  ? "bg-destructive/10 text-destructive"
-                  : product.badge === "Nuevo"
-                  ? "bg-primary/10 text-primary"
-                  : "bg-accent text-accent-foreground"
+                product.badge === "Oferta" ? "bg-destructive/10 text-destructive" : product.badge === "Nuevo" ? "bg-primary/10 text-primary" : "bg-accent text-accent-foreground"
               }`}
             >
               {product.badge}
             </span>
-          )}
+          ) : null}
           {/* Quick add button */}
           <button
             type="button"
@@ -384,11 +237,7 @@ function ProductCard({
           <p className="text-sm text-muted-foreground mb-4">{product.description}</p>
           <div className="flex items-center gap-2">
             <span className="text-lg font-medium text-foreground">${product.price}</span>
-            {product.originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                ${product.originalPrice}
-              </span>
-            )}
+            {product.originalPrice ? <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span> : null}
           </div>
         </div>
       </div>
