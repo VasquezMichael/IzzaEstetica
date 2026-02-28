@@ -103,7 +103,7 @@ export function FeatureSection() {
             }`}
             style={{ transitionDelay: '0ms' }}
           >
-            <video
+           {/* <video
               autoPlay
               muted
               loop
@@ -111,8 +111,14 @@ export function FeatureSection() {
               className="absolute inset-0 w-full h-full object-cover"
             >
               <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c4baaf67-b900-4b90-af2a-daf25a5a4b78-5un5eTbj9Z67qEtEdsQwlYrte9dZM9.mp4" type="video/mp4" />
-            </video>
+            </video>//
             {/* Overlay Card */}
+            <Image
+              src="/activos.png"
+              alt="Limpieza suave"
+              fill
+              className="object-cover"
+            />
             <div className="absolute bottom-8 left-8 right-8 bg-white p-6 shadow-lg rounded-xl">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
@@ -120,17 +126,17 @@ export function FeatureSection() {
                 </div>
                 <div>
                   <h3 className="text-xl text-foreground mb-2 font-medium">
-                    100% <span className="">Vegetal</span>
+                    Activos <span className="">dermocosmeticos</span>
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Formulado exclusivamente con ingredientes botanicos y extractos naturales de plantas.
+                    Formulado con activos seleccionados para hidratar, calmar y cuidar la barrera cutanea.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Top Right - 100% Natural */}
+          {/* Top Right - Limpieza suave */}
           <div 
             className={`rounded-3xl p-6 md:p-8 flex flex-col justify-center md:col-span-2 relative overflow-hidden transition-all duration-700 ease-out ${
               isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
@@ -139,8 +145,8 @@ export function FeatureSection() {
           >
             {/* Background Image */}
             <Image
-              src="/images/products/0ed61900-dd29-4dd2-bc2d-abc2db54c352.png"
-              alt="Natural ingredients"
+              src="/LimpiezaSuaveBg.png"
+              alt="Limpieza suave"
               fill
               className="object-cover"
             />
@@ -148,21 +154,21 @@ export function FeatureSection() {
             
             <div className="relative z-10">
               <h3 className="text-3xl md:text-4xl text-neutral-950 mb-2">
-                100% Natural
+                Limpieza suave
               </h3>
               
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-neutral-950/90 text-sm">
                   <Leaf className="w-4 h-4 flex-shrink-0" />
-                  <span>Sin quimicos agresivos</span>
+                  <span>Para pieles sensibles</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-950/90 text-sm">
                   <Flower2 className="w-4 h-4 flex-shrink-0" />
-                  <span>Bondad vegetal</span>
+                  <span>Calma y confort diario</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-950/90 text-sm">
                   <Globe className="w-4 h-4 flex-shrink-0" />
-                  <span>Origen etico</span>
+                  <span>Ayuda a cuidar la barrera cutanea</span>
                 </div>
               </div>
             </div>
@@ -175,7 +181,7 @@ export function FeatureSection() {
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            {/* Background Video */}
+            {/* Background Video 
             <video
               autoPlay
               muted
@@ -184,20 +190,27 @@ export function FeatureSection() {
               className="absolute inset-0 w-full h-full object-cover scale-[1.02]"
             >
               <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/a0b7c364-afa9-4afa-9716-45718578cc01-Ih8UaqQr1bl8aoNlbRha4FgaQ65eXX.mp4" type="video/mp4" />
-            </video>
+            </video>*/}
+            <Image
+              src="/atencionpersonalizada.png"
+              alt="Limpieza suave"
+              fill
+              className="object-cover"
+            />
             {/* Overlay for text readability */}
             <div className="absolute inset-0 bg-transparent" />
             
             <div className="relative z-10 flex flex-col justify-center h-full text-left items-start">
-              <div className="inline-flex items-center justify-center w-10 h-10 mb-3">
-                <Recycle className="w-8 h-8 text-black" />
-              </div>
+
               <h3 className="font-sans text-base mb-1 text-black">
-                Ecoamigable
+                Asesoramiento profesional
               </h3>
               <h3 className="text-2xl md:text-3xl mb-2 text-black">
-                Empaque
+                Rutina personalizada
               </h3>
+              <p className="text-sm text-black/80">
+                Evaluamos tu piel y te guiamos paso a paso.
+              </p>
             </div>
           </div>
         </div>

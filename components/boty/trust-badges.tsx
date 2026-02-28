@@ -6,23 +6,23 @@ import { Leaf, Droplets, Sparkles, Flower2 } from "lucide-react"
 const badges = [
   {
     icon: Leaf,
-    title: "Certificacion organica",
-    description: "Ingredientes naturales seleccionados"
+    title: "Limpieza suave",
+    description: "Formula pensada para limpiar sin irritar"
   },
   {
     icon: Droplets,
-    title: "Extractos puros",
-    description: "Formulas botanicas limpias"
+    title: "Para piel sensible",
+    description: "Cuidado diario con enfoque calmante"
   },
   {
     icon: Sparkles,
-    title: "Belleza limpia",
-    description: "Sin quimicos agresivos"
+    title: "Hidratacion diaria",
+    description: "Ayuda a mantener la piel equilibrada"
   },
   {
     icon: Flower2,
-    title: "Formula vegana",
-    description: "Cuidado de la piel vegetal"
+    title: "Activos dermocosmeticos",
+    description: "Seleccionados para cuidado facial continuo"
   }
 ]
 
