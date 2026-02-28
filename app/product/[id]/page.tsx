@@ -12,10 +12,10 @@ import { type PublicProduct } from "@/lib/public-products"
 type ProductDetail = PublicProduct
 
 const benefits = [
-  { icon: Leaf, label: "100% Natural" },
-  { icon: Heart, label: "Cruelty-Free" },
-  { icon: Recycle, label: "Ecoamigable" },
-  { icon: Award, label: "Aprobado por expertos" }
+  { icon: Leaf, label: "Limpieza suave" },
+  { icon: Heart, label: "Para piel sensible" },
+  { icon: Recycle, label: "Hidratacion diaria" },
+  { icon: Award, label: "Activos dermocosmeticos" }
 ]
 
 type AccordionSection = "details" | "howToUse" | "ingredients" | "delivery"
@@ -172,7 +172,7 @@ export default function ProductPage() {
                       <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                     ))}
                   </div>
-                  <span className="text-sm text-muted-foreground">(128 resenas)</span>
+                  <span className="text-sm text-muted-foreground">(128 reseñas)</span>
                 </div>
 
                 <p className="text-foreground/80 leading-relaxed">{product.description}</p>
@@ -186,7 +186,7 @@ export default function ProductPage() {
 
               {/* Size Selector */}
               <div className="mb-6">
-                <label className="text-sm font-medium text-foreground mb-3 block">Tamano</label>
+                <label className="text-sm font-medium text-foreground mb-3 block">Tamaño</label>
                 <div className="flex gap-3">
                   {sizes.map((size) => (
                     <button

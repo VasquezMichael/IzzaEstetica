@@ -4,7 +4,6 @@ import { TrustBadges } from "@/components/boty/trust-badges"
 import { FeatureSection } from "@/components/boty/feature-section"
 import { ProductGrid } from "@/components/boty/product-grid"
 import { Testimonials } from "@/components/boty/testimonials"
-import { CTABanner } from "@/components/boty/cta-banner"
 import { Newsletter } from "@/components/boty/newsletter"
 import { Footer } from "@/components/boty/footer"
 
@@ -17,7 +16,6 @@ export default function HomePage() {
       <ProductGrid />
       <FeatureSection />
       <Testimonials />
-      <CTABanner />
       <Newsletter />
       <Footer />
     </main>

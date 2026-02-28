@@ -6,74 +6,74 @@ import { Star } from "lucide-react"
 const testimonials = [
   {
     id: 1,
-    name: "Sarah M.",
-    location: "New York",
+    name: "Camila",
+    location: "La Plata",
     rating: 5,
-    text: "My skin has never felt so soft and nourished. The Radiance Serum is now a permanent part of my morning routine.",
+    text: "El trabajo de Izza es impecable. Mi piel nunca se sintió tan suave y radiante.",
     product: "Radiance Serum"
   },
   {
     id: 2,
-    name: "Emma L.",
-    location: "Los Angeles",
+    name: "Sofia",
+    location: "Ensenada",
     rating: 5,
-    text: "Por fin, skincare que de verdad se siente natural. Sin quimicos agresivos. Mi piel sensible ama los productos de Izza.",
+    text: "Por fin, skincare que de verdad se siente natural. Sin quimicos agresivos.",
     product: "Gentle Cleanser"
   },
   {
     id: 3,
-    name: "Jessica R.",
-    location: "Chicago",
+    name: "Karen",
+    location: "La Plata",
     rating: 5,
-    text: "The Hydra Cream is absolutely divine. It absorbs beautifully and keeps my skin hydrated all day long.",
+    text: "La crema hidratante de Izza es un sueño. Mi piel se siente tan nutrida y fresca todo el día.",
     product: "Hydra Cream"
   },
   {
     id: 4,
-    name: "Maria K.",
-    location: "Miami",
+    name: "Abril",
+    location: "La Plata",
     rating: 5,
     text: "He probado muchisimos serums, pero nada se compara con el glow que me da Izza. Es transformador.",
     product: "Glow Serum"
   },
   {
     id: 5,
-    name: "Sophie T.",
-    location: "Seattle",
+    name: "Micaela",
+    location: "Berisso",
     rating: 5,
-    text: "The packaging is beautiful and sustainable. I feel good knowing I'm choosing eco-friendly skincare.",
+    text: "La crema de noche de Izza es mi favorita. Me despierto con la piel suave y descansada, es como un spa en casa.",
     product: "Night Cream"
   },
   {
     id: 6,
-    name: "Anna P.",
-    location: "Boston",
+    name: "Anna",
+    location: "La Plata",
     rating: 5,
-    text: "Mi piel con acne mejoro desde que cambie a Izza. Los ingredientes naturales si hacen diferencia.",
+    text: "Mi piel con acne mejoro desde la primer sesion. El buen trabajo si hace la diferencia.",
     product: "Gentle Cleanser"
   },
   {
     id: 7,
-    name: "Claire B.",
-    location: "Austin",
+    name: "Macarena",
+    location: "La Plata",
     rating: 5,
-    text: "The texture of the Renewal Oil is perfection. It absorbs quickly and leaves my skin glowing.",
+    text: "El serum de renovación de Izza es mi nuevo esencial. Mi piel se siente más firme y luminosa, es como un mini lifting cada vez que lo uso.",
     product: "Renewal Oil"
   },
   {
     id: 8,
-    name: "Lily W.",
-    location: "Portland",
+    name: "Brenda",
+    location: "City bell",
     rating: 5,
-    text: "Me encanta que Izza sea cruelty-free y vegana. Productos que van con mis valores.",
+    text: "Me encanta el trabajo de Izza. La crema hidratante es tan ligera pero efectiva, perfecta para mi piel mixta. Se absorbe rápido y deja un acabado radiante sin ser grasosa.",
     product: "Hydra Cream"
   },
   {
     id: 9,
-    name: "Rachel D.",
-    location: "Denver",
+    name: "Lucia",
+    location: "Villa Elisa",
     rating: 5,
-    text: "The scent is so subtle and natural. No overpowering fragrances, just pure botanical goodness.",
+    text: "El serum de vitamina C de Izza es un must-have. Mi piel se ve más brillante y uniforme, y mis manchas oscuras han disminuido mucho.",
     product: "Radiance Serum"
   }
 ]
