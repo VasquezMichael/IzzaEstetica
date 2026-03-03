@@ -14,10 +14,23 @@ import {
 import { useCart } from "./cart-context"
 
 export function CartDrawer() {
-  const { items, removeItem, updateQuantity, isOpen, setIsOpen, itemCount, subtotal } = useCart()
+  const { items, removeItem, updateQuantity, clearCart, isOpen, setIsOpen, itemCount, subtotal } = useCart()
 
   const shipping = 0
   const total = subtotal + shipping
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }).format(value)
+
+  const handleClearCart = () => {
+    const confirmed = window.confirm("Estas seguro de vaciar el carrito?")
+    if (!confirmed) return
+    clearCart()
+  }
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
@@ -96,7 +109,7 @@ export function CartDrawer() {
 
                   {/* Price */}
                   <div className="text-right">
-                    <p className="font-medium text-foreground">${item.price * item.quantity}</p>
+                    <p className="font-medium text-foreground">{formatCurrency(item.price * item.quantity)}</p>
                   </div>
                 </div>
               ))}
@@ -110,15 +123,15 @@ export function CartDrawer() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between text-muted-foreground">
                 <span>Subtotal</span>
-                <span>${subtotal}</span>
+                <span>{formatCurrency(subtotal)}</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
                 <span>Envio</span>
-                <span>{shipping === 0 ? 'Gratis' : `$${shipping}`}</span>
+                <span>{shipping === 0 ? "Gratis" : formatCurrency(shipping)}</span>
               </div>
               <div className="flex justify-between text-base font-medium text-foreground pt-2 border-t border-border/50">
                 <span>Total</span>
-                <span>${total}</span>
+                <span>{formatCurrency(total)}</span>
               </div>
             </div>
 
@@ -138,6 +151,13 @@ export function CartDrawer() {
                 Seguir comprando
               </button>
             </DrawerClose>
+            <button
+              type="button"
+              onClick={handleClearCart}
+              className="w-full border border-destructive/40 text-destructive py-4 rounded-full font-medium hover:bg-destructive/10 boty-transition"
+            >
+              Vaciar carrito
+            </button>
           </DrawerFooter>
         )}
       </DrawerContent>
