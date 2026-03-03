@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ShoppingBag, SlidersHorizontal, X } from "lucide-react"
 import { Header } from "@/components/boty/header"
 import { Footer } from "@/components/boty/footer"
+import { useCart } from "@/components/boty/cart-context"
 import { type PublicProduct, type ShopCategory, toShopCategory } from "@/lib/public-products"
 
 const categories: Array<"todos" | ShopCategory> = ["todos", "serums", "hidratantes", "limpiadores", "aceites", "mascaras", "tonicos", "otros"]
@@ -182,6 +183,7 @@ function ProductCard({
   isVisible: boolean
 }) {
   const [imageLoaded, setImageLoaded] = useState(false)
+  const { addItem } = useCart()
 
   return (
     <Link
@@ -224,6 +226,14 @@ function ProductCard({
             className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 boty-transition boty-shadow"
             onClick={(e) => {
               e.preventDefault()
+              e.stopPropagation()
+              addItem({
+                id: `${product.slug}__Unico`,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                image: product.image
+              })
             }}
             aria-label="Agregar al carrito"
           >

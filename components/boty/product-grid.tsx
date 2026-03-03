@@ -189,7 +189,7 @@ export function ProductGrid() {
                       e.preventDefault()
                       e.stopPropagation()
                       addItem({
-                        id: product.slug,
+                        id: `${product.slug}__Unico`,
                         name: product.name,
                         description: product.description,
                         price: product.price,
