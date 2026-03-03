@@ -7,6 +7,7 @@ import { useParams } from "next/navigation"
 import { ChevronLeft, Minus, Plus, ChevronDown, Leaf, Heart, Award, Recycle, Star, Check } from "lucide-react"
 import { Header } from "@/components/boty/header"
 import { Footer } from "@/components/boty/footer"
+import { useCart } from "@/components/boty/cart-context"
 import { type PublicProduct } from "@/lib/public-products"
 
 type ProductDetail = PublicProduct
@@ -32,6 +33,7 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
   const [openAccordion, setOpenAccordion] = useState<AccordionSection | null>("details")
   const [isAdded, setIsAdded] = useState(false)
+  const { addItem } = useCart()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -94,6 +96,22 @@ export default function ProductPage() {
   }
 
   const handleAddToCart = () => {
+    if (!product) return
+
+    const selectedVariant = selectedSize || "Unico"
+    const variantSuffix = selectedVariant === "Unico" ? "" : ` · ${selectedVariant}`
+
+    addItem(
+      {
+        id: `${product.slug}__${selectedVariant}`,
+        name: product.name,
+        description: `${product.description}${variantSuffix}`,
+        price: product.price,
+        image: product.image
+      },
+      quantity
+    )
+
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 2000)
   }
